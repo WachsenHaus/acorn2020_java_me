@@ -1,5 +1,6 @@
 package tesc.mypac;
 
+
 public class Box {
 
 	public static Member mem = null; // 널로 초기화된 스태틱 필드

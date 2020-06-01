@@ -16,6 +16,7 @@ public class MainClass05 {
 		r2.height=10;
 		int b=r2.getArea();
 		
+		
 	}
 }
 
