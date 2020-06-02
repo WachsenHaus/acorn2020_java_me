@@ -3,6 +3,10 @@ package test.mypac;
 public class Computer {
 //필드
 	public Cpu cpu;
+	public Computer()
+	{
+		System.out.println("기본 생성자가 호출되었습니다.");
+	}
 	public Computer (Cpu cpu) {
 		this.cpu = cpu;
 	}
