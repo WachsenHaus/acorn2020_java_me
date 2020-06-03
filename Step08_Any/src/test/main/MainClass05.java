@@ -18,8 +18,8 @@ public class MainClass05 {
 		//3. 반복문 for문을 이용해서 각각 4각형의 면적을 콘솔창에 출력해보세요.
 		for(int i =0; i<rects.length; i++)
 		{
-//			rects[i] = new Rect(r.nextInt(7
-			)+1,r.nextInt(10)+1);	
+//			rects[i] = new Rect(r.nextInt(7	)+1,r.nextInt(10)+1);	
+		
 			System.out.println(rects[i].getArea());
 		}
 		
