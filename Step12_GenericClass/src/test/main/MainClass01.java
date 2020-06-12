@@ -9,7 +9,21 @@ public class MainClass01 {
 		FruitBox<Apple> a = new FruitBox<Apple>();
 		FruitBox<Banana> b = new FruitBox<Banana>();
 		FruitBox<Orange> o = new FruitBox<Orange>();
-
+		AppleBox<Apple> ap = new AppleBox<Apple>();
+		
+		ap.ee();
+		ap.add(new Apple());
+		System.out.println((String)ap.get(0).name);
+		class appleFB<E> extends AppleBox<E>{
+			public void pull() {
+				System.out.println("테스트");
+			}
+		};
+		appleFB<Apple> apfb = new appleFB<>();
+		apfb.pull();
+		apfb.add(new Apple());
+//		ap.pull();
+		
 		//generic 클래스로 지정한 타입 객체를 넣어 주어야 한다.
 		a.push(new Apple());
 		b.push(new Banana());

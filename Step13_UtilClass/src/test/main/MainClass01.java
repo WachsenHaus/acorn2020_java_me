@@ -7,6 +7,7 @@ public class MainClass01 {
 		//String type을 저장할 수 있는 index로 관리되는 목록(List) 객체
 		//자바에서 주로 사용하는 배열
 		//인덱스로 사용한다고 ? 
+		//어레이리스트는 제네릭 클래스구나.
 		
 		ArrayList<String> names = new ArrayList<String>();
 		//참조값만 들어간다. 예를 들어int는 Interger로 만들어서 넣어야함.
