@@ -2,6 +2,8 @@ package tset.main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class MainClass01 {
 
@@ -27,5 +29,30 @@ public class MainClass01 {
 		catch(Exception ex) {
 			System.out.println("Static Main함수 오류");
 		}
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT num,name,addr FROM member "
+					+ " ORDER BY num ASC";
+			//PreparedStatement 객체의 참조값 없어오기.
+			pstmt=conn.prepareStatement(sql);
+			//PreparedStatement 객체를 이용해서 query문 수행하고 결과를 ResultSet
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				int num=rs.getInt("num");
+				String name = rs.getString("name");
+				String addr = rs.getString("addr");
+				//출력하기
+				System.out.println(num + " | " + name + " | " + addr);
+			}
+			
+			
+		}
+		catch(Exception ex)
+		{
+			System.out.println("sql execute쿼리 오류");
+		}
+		
 	}
 }
