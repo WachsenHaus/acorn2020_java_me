@@ -36,9 +36,14 @@ public class MainClass01 {
 			String sql = "SELECT num,name,addr FROM member "
 					+ " ORDER BY num ASC";
 			//PreparedStatement 객체의 참조값 없어오기.
+			//pstmt가 sql문을 실행해준다.
 			pstmt=conn.prepareStatement(sql);
+			
 			//PreparedStatement 객체를 이용해서 query문 수행하고 결과를 ResultSet
+			//resultset객체로 받아오기.
 			rs=pstmt.executeQuery();
+			
+			//resultset 결과값이네. 
 			while(rs.next()) {
 				int num=rs.getInt("num");
 				String name = rs.getString("name");
@@ -46,6 +51,7 @@ public class MainClass01 {
 				//출력하기
 				System.out.println(num + " | " + name + " | " + addr);
 			}
+			
 			
 			
 		}
