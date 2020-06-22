@@ -8,7 +8,15 @@ package test.dao;
  * 4. 나머지 기능들은 (select, insert, update, delete)들은 non static으로 만들기
  */
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import test.dto.MemberDto;
+import test.util.DBConnect;
 
 public class MemberDao {
 	//자신의 참조값을 저장할 private 필드
@@ -26,16 +34,160 @@ public class MemberDao {
 		}
 		return dao;
 	}
+	public MemberDto getData(int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		MemberDto myDto = new MemberDto();
+		try {
+			conn = new DBConnect().getConn();
+			String sql="SELECT *" 
+					+ " FROM member"
+					+ " WHERE num=?";
+			pstmt =conn.prepareStatement(sql);			
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				myDto.setNum(rs.getInt("num"));
+				myDto.setName(rs.getString("name"));
+				myDto.setAddr(rs.getString("addr"));
+				System.out.println(myDto.getNum() + " | " + myDto.getName() + " | " + myDto.getAddr());
+				System.out.println("회원정보를 얻어왔습니다..");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt != null)pstmt.close();
+				if(conn != null)conn.close();
+				return myDto;
+			}
+			catch(Exception e)
+			{
+				System.out.println("종료에러");
+			}
+		}
+		return null;
+	}
+	public List<MemberDto> getList(){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<MemberDto> list = new ArrayList<>();
+		try {
+			conn = new DBConnect().getConn();
+			String sql="SELECT *" 
+					+ " FROM member"
+					+ " ORDER BY num ASC";
+			pstmt =conn.prepareStatement(sql);			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MemberDto myDto = new MemberDto();
+				myDto.setNum(rs.getInt("num"));
+				myDto.setName(rs.getString("name"));
+				myDto.setAddr(rs.getString("addr"));
+				list.add(myDto);
+				System.out.println(myDto.getNum() + " | " + myDto.getName() + " | " + myDto.getAddr());
+			}
+			System.out.println("회원정보의 목록을 얻어왔습니다..");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt != null)pstmt.close();
+				if(conn != null)conn.close();
+				return list;
+			}
+			catch(Exception e)
+			{
+				System.out.println("종료에러");
+			}
+		}
+		return null;
+	}
 	
 	//회원 정보를 DB에 저장하는 메소드
 	public void insert(MemberDto dto) {
-		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = new DBConnect().getConn();
+			String sql="INSERT INTO MEMBER" 
+					+ " (num,name,addr)"
+					+ " VALUES(member_seq.NEXTVAL, ?, ?)";
+			pstmt =conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getName());
+			pstmt.setString(2, dto.getAddr());
+			pstmt.executeUpdate();
+			System.out.println("회원정보를 저장했습니다.");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt != null)pstmt.close();
+				if(conn != null)conn.close();
+			}
+			catch(Exception e)
+			{
+				System.out.println("종료에러");
+			}
+		}
+	}
+	public void delete(int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = new DBConnect().getConn();
+			String sql = "DELETE FROM member"
+					+ " WHERE num=?";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+			System.out.println("회원 정보를 삭제 했습니다.");
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(pstmt!= null) pstmt.close();
+				if(conn!= null) conn.close();
+			}catch(Exception e)
+			{
+				
+			}
+		}
 		
 	}
-	
 	//회원 정보를 DB에서 수정하는 메소드
 	public void update(MemberDto dto)
 	{
-		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = new DBConnect().getConn();
+			String sql="UPDATE member"
+					+ " SET name=?, addr=?"
+					+ " WHERE num=?";
+			pstmt =conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getName());
+			pstmt.setString(2, dto.getAddr());
+			pstmt.setInt(3, dto.getNum());
+			pstmt.executeUpdate();
+			System.out.println("회원정보를 저장했습니다.");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt != null)pstmt.close();
+				if(conn != null)conn.close();
+			}
+			catch(Exception e)
+			{
+				System.out.println("종료에러");
+			}
+		}
 	}
 }
