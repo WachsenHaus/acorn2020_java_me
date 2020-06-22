@@ -25,6 +25,7 @@ public class MainClass05 {
 			System.out.println("Oracle DB 접속 성공");
 		}catch(Exception e) {
 			e.printStackTrace();
+			System.out.println();
 		}
 		
 		int num=2;

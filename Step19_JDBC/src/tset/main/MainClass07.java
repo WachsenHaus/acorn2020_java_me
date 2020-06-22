@@ -45,6 +45,8 @@ public class MainClass07 {
 				list.add(myMember);
 			}
 			System.out.println("list에 담았습니다.");
+			printMember(list);
+
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -56,6 +58,14 @@ public class MainClass07 {
 			{
 				System.out.println("종료 오류");
 			}
+		}
+	} // main()
+	
+	//회원목록을 콘솔창에 출력해주는 메소드
+	public static void printMember(List<MemberDto> list) {
+		for(MemberDto tmp:list)
+		{
+			System.out.println(tmp.getNum() + " | " + tmp.getName()+ " | " + tmp.getAddr());
 		}
 	}
 }
