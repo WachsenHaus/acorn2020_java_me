@@ -107,9 +107,11 @@ public class MemberDao {
 	}
 	
 	//회원 정보를 DB에 저장하는 메소드
-	public void insert(MemberDto dto) {
+	//작업의 성공여부가 boolean으로 리턴된다.
+	public boolean insert(MemberDto dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		boolean result = false;
 		try {
 			conn = new DBConnect().getConn();
 			String sql="INSERT INTO MEMBER" 
@@ -118,8 +120,12 @@ public class MemberDao {
 			pstmt =conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getName());
 			pstmt.setString(2, dto.getAddr());
-			pstmt.executeUpdate();
+			if(pstmt.executeUpdate() != 0 ) 
+			{
+				result = true;	
+			}
 			System.out.println("회원정보를 저장했습니다.");
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -133,8 +139,10 @@ public class MemberDao {
 				System.out.println("종료에러");
 			}
 		}
+		return result;
 	}
-	public void delete(int num) {
+	public boolean delete(int num) {
+		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -143,7 +151,11 @@ public class MemberDao {
 					+ " WHERE num=?";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
-			pstmt.executeUpdate();
+			
+			if(pstmt.executeUpdate() != 0)
+			{
+				result = true;
+			}
 			System.out.println("회원 정보를 삭제 했습니다.");
 		}catch(Exception e)
 		{
@@ -158,11 +170,12 @@ public class MemberDao {
 				
 			}
 		}
-		
+		return result;
 	}
 	//회원 정보를 DB에서 수정하는 메소드
-	public void update(MemberDto dto)
+	public boolean update(MemberDto dto)
 	{
+		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -174,7 +187,10 @@ public class MemberDao {
 			pstmt.setString(1, dto.getName());
 			pstmt.setString(2, dto.getAddr());
 			pstmt.setInt(3, dto.getNum());
-			pstmt.executeUpdate();
+			if(pstmt.executeUpdate() != 0) 
+			{
+				result = true;
+			}
 			System.out.println("회원정보를 저장했습니다.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -183,11 +199,13 @@ public class MemberDao {
 			try {
 				if(pstmt != null)pstmt.close();
 				if(conn != null)conn.close();
+				return result;
 			}
 			catch(Exception e)
 			{
 				System.out.println("종료에러");
 			}
 		}
+		return result;
 	}
 }
