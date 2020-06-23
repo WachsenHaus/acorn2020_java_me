@@ -38,7 +38,7 @@ public class MemberDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		MemberDto myDto = new MemberDto();
+		MemberDto myDto =null;
 		try {
 			conn = new DBConnect().getConn();
 			String sql="SELECT *" 
@@ -48,11 +48,10 @@ public class MemberDao {
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
+				myDto = new MemberDto();
 				myDto.setNum(rs.getInt("num"));
 				myDto.setName(rs.getString("name"));
 				myDto.setAddr(rs.getString("addr"));
-				System.out.println(myDto.getNum() + " | " + myDto.getName() + " | " + myDto.getAddr());
-				System.out.println("회원정보를 얻어왔습니다..");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -87,7 +86,7 @@ public class MemberDao {
 				myDto.setName(rs.getString("name"));
 				myDto.setAddr(rs.getString("addr"));
 				list.add(myDto);
-				System.out.println(myDto.getNum() + " | " + myDto.getName() + " | " + myDto.getAddr());
+//				System.out.println(myDto.getNum() + " | " + myDto.getName() + " | " + myDto.getAddr());
 			}
 			System.out.println("회원정보의 목록을 얻어왔습니다..");
 		} catch (SQLException e) {
