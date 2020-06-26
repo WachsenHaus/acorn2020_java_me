@@ -9,8 +9,11 @@ public class MemberDto {
 	public MemberDto() {
 		//인자로 필드에 저장할 값을 전달 받는 생성자.
 	}
-	public MemberDto(int i, String string, String string2) {
+	public MemberDto(int i, String name, String addr) {
 		// TODO Auto-generated constructor stub
+		this.num = i;
+		this.name = name;
+		this.addr = addr;
 	}
 	//필드의 접근 메소드 setter, getter 메소드
 	public int getNum() {
